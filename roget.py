@@ -27,7 +27,7 @@ def getWordGroups(seekwords: List[str]) -> Dict[str, List[int]]:
             'seekword': word
         }
         response = requests.post(url, headers=headers, data=data)
-        groups = re.findall("<b>#\d\d\d", response.text)
+        groups = re.findall(re.compile("(<b>#\d\d\d|<b>#\d\d|<b>#\d)"), response.text)
         result[word] = [int(number[4:]) for number in groups]
 
     return result
