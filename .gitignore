@@ -1,2 +1,5 @@
 /env
 /out.json
+out_frequences.txt
+out_vector.txt
+__pycache__/roget.cpython-310.pyc

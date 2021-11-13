@@ -1,12 +1,13 @@
 from typing import List, Dict
 from pathlib import Path
+from time import sleep
 
 import argparse
 import requests
 import json
 import re
 
-def getWordGroups(seekwords: List[str]) -> Dict[str, List[int]]:
+def vectorize_word(word: str) -> List[str]:
     url = "http://www.roget.org/scripts/qq.php"
 
     headers = {
@@ -21,14 +22,22 @@ def getWordGroups(seekwords: List[str]) -> Dict[str, List[int]]:
         'Upgrade-Insecure-Requests': '1',
         'Sec-GPC': '1',
     }
+    
+    data = {
+        'seekword': word
+    }
+    response = requests.post(url, headers=headers, data=data)
+    groups = re.findall(re.compile("(<b>#\d\d\d\d|<b>#\d\d\da|<b>#\d\d\db|<b>#\d\d\d|<b>#\d\da|<b>#\d\d|<b>#\d)"), response.text)
+    result = [str(number[4:]) for number in groups]
+
+    sleep(0.3)
+
+    return result
+
+def getWordGroups(seekwords: List[str]) -> Dict[str, List[int]]:
     result = {}
     for word in seekwords:
-        data = {
-            'seekword': word
-        }
-        response = requests.post(url, headers=headers, data=data)
-        groups = re.findall(re.compile("(<b>#\d\d\d\d|<b>#\d\d\da|<b>#\d\d\db|<b>#\d\d\d|<b>#\d\da|<b>#\d\d|<b>#\d)"), response.text)
-        result[word] = [str(number[4:]) for number in groups]
+        result[word] = vectorize_word(word)
 
     return result
 
