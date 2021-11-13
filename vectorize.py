@@ -58,6 +58,6 @@ if __name__ == "__main__":
     converted = {str((key, convertion_table[key])): value for key, value in vector.items()}
     output_vector.write_text(json.dumps(converted, indent=2))
     freq = frequences(vector)
-    converted = {str((key, convertion_table[key])): value for key, value in vector.items()}
+    converted = {str((key, convertion_table[key])): value for key, value in freq.items()}
     freq = dict(reversed(sorted(freq.items(), key=lambda item: item[1])))
     output_frequences.write_text(json.dumps(converted, indent=2))
