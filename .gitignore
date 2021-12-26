@@ -3,3 +3,13 @@
 out_frequences.txt
 out_vector.txt
 __pycache__/roget.cpython-310.pyc
+gui.spec
+Roget.zip
+__pycache__/gui.cpython-310.pyc
+__pycache__/vectorize.cpython-310.pyc
+vector.json
+dist/convert.json
+dist/frequences.json
+dist/gui.exe
+dist/input.txt
+frequences.json
