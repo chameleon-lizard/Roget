@@ -1,3 +1,4 @@
+from tkinter import filedialog as fd
 from pathlib import Path
 import tkinter as tk
 import json
@@ -39,8 +40,9 @@ class App():
         self.tb_output_vector.delete(1.0, tk.END)
 
         text = self.tb_input.get(1.0, tk.END)
-        if len(text) == 1 and Path("input.txt").exists():
-            text = Path("input.txt").read_text()
+        if len(text) == 1:
+            filename = fd.askopenfile(defaultextension="*.txt")
+            text = Path(filename.name).read_text()
             self.tb_input.insert(1.0, text)
         
         text = self.preprocess(text)
