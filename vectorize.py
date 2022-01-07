@@ -1,17 +1,26 @@
 import json
-from roget import vectorize_word
+from vector_word import vectorize_word
 from pathlib import Path
 from typing import Dict
 
 import argparse
+import spacy
+
 
 def vectorize(text: str) -> Dict[str, int]:
     '''
     Returns a sparse 1042-dimentional vector with the amount of words in each category.
     '''
+    nlp = spacy.load("en_core_web_sm/en_core_web_sm-3.2.0")
+    doc = nlp(text)
+
+    lemma_list = []
+    for token in doc:
+        lemma_list.append(token.lemma_)
+
     result = {}
-    for word in text.split():
-        for category in vectorize_word(word):
+    for lemma in lemma_list:
+        for category in vectorize_word(lemma):
             if category in result.keys():
                 result[category] += 1
             else:
@@ -21,7 +30,7 @@ def vectorize(text: str) -> Dict[str, int]:
 
 def frequences(vector: Dict[str, int]) -> Dict[str, float]:
     total = sum((i for i in vector.values()))
-    return {cat: freq / total * 100 for cat, freq in vector.items()}
+    return {cat: freq / total for cat, freq in vector.items()}
 
 if __name__ == "__main__":
     basepath = Path.cwd()

@@ -4,9 +4,8 @@ import tkinter as tk
 import json
 
 from vectorize import frequences, vectorize
-from typing import List
 
-class App():    
+class App():
     def __init__(self) -> None:
         self.window = tk.Tk()
         
@@ -54,15 +53,22 @@ class App():
         vectorized = json.dumps(converted, indent=2)
         self.tb_output_vector.insert(1.0, vectorized)
 
+        everything = {str((key, self.convertion_table[key])): 0 for key in self.convertion_table.keys()}
+        for key in converted.keys():
+            everything[key] = converted[key]
+        everything = json.dumps(everything, indent=2)
+
         freq = frequences(vector)
         converted = {str((key, self.convertion_table[key])): value for key, value in freq.items()}
         freq = dict(reversed(sorted(freq.items(), key=lambda item: item[1])))
         frequenced = json.dumps(converted, indent=2)
         self.tb_output_freq.insert(1.0, frequenced)
 
+
         Path("input.txt").write_text(text)
         Path("vector.json").write_text(vectorized)
         Path("frequences.json").write_text(frequenced)
+        Path("everything.json").write_text(everything)
         
 
 if __name__ == "__main__":
