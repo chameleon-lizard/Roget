@@ -46,7 +46,7 @@ class App():
         
         text = self.preprocess(text)
 
-        vector = vectorize(text)
+        vector, non_recognized = vectorize(text)
 
         vector = dict(reversed(sorted(vector.items(), key=lambda item: item[1])))
         converted = {str((key, self.convertion_table[key])): value for key, value in vector.items()}
@@ -65,10 +65,11 @@ class App():
         self.tb_output_freq.insert(1.0, frequenced)
 
 
-        Path("input.txt").write_text(text)
-        Path("vector.json").write_text(vectorized)
-        Path("frequences.json").write_text(frequenced)
-        Path("everything.json").write_text(everything)
+        Path("../input.txt").write_text(text)
+        Path("../vector.json").write_text(vectorized)
+        Path("../frequences.json").write_text(frequenced)
+        Path("../everything.json").write_text(everything)
+        Path("../non-recognized.txt").write_text(str(non_recognized))
         
 
 if __name__ == "__main__":
