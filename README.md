@@ -1,24 +1,17 @@
 # Roget 
 
-Simple script to get stuff from [Roget's hyperlinked thesaurus site](http://www.roget.org). All the credit goes to them, I'm just fooling their robots.txt.
+Text vectorization using [roget-tools](https://github.com/prpole/roget-tools). 
 
 ## Installation
 
-Use virtual environments. They're cool.
+All in the releases. Don't even think about trying to build it on your own, it's dependency hell.
 
-```
-python -m venv env
-source ./env/bin/activate
-pip install -r requirements.txt
-```
+If you still want to do this by yourself, you'll need to:
+- Download `roget-tools`
+- Install `spacy`, `tkinter`, `en_core_web_lg` language model for spacy and `pyinstaller`
+- Build `gui.py` via the `pyinstaller` (without the -F flag!)
+- Copy `roget-tools` to the `dist/gui`
+- Copy `en_core_web_lg` from wherever pip downloaded it into the `dist/gui`
+- Copy `convert.json` into the `dist/gui`
 
-If you're lazy, you can just do
-
-```
-pip install -r requrements.txt
-```
-
-## Usage
-- `python roget.py -h` - gives you help.
-- `python roget.py -i input.txt` - uses space-separated words in input.txt to get their groups in the roget thesaurus and save them into out.json
-- `python roget.py -i input.txt -o output.json` - same as above, but with explicitly defined output path.
+I am deeply sorry for all of this.
